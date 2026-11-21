@@ -31,8 +31,6 @@
     "typescript": "^5"
   },
   "overrides": {
-    "next": {
-      "postcss": "$postcss"
-    }
+    "postcss": "$postcss"
   }
 }
