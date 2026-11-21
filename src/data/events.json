@@ -1,0 +1,262 @@
+[
+  {
+    "id": "evt-01",
+    "title": "NextGen AI & Autonomous Agents Summit",
+    "tagline": "Exploring next-generation LLMs, multi-agent frameworks, and robotic reasoning.",
+    "description": "Join leading AI researchers and visionary founders for a deep dive into autonomous workflows, synthetic datasets, and practical generative UI architectures.",
+    "category": "Tech",
+    "date": "2026-12-05",
+    "displayDate": "Dec 05, 2026",
+    "time": "09:00 AM - 05:30 PM",
+    "location": {
+      "venue": "Innovation Hub, Hall A",
+      "city": "Bengaluru, KA",
+      "type": "In-Person"
+    },
+    "price": 4999,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Artificial Intelligence", "Autonomous Agents", "Keynote", "Future Tech"],
+    "featured": true,
+    "totalSeats": 350,
+    "availableSeats": 42,
+    "organizer": {
+      "name": "Cortex Labs",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-02",
+    "title": "Minimalist Interface & Motion Design Lab",
+    "tagline": "Hands-on masterclass crafting seamless 60fps micro-interactions with Framer Motion.",
+    "description": "An intensive interactive lab focused on interaction physics, tactile button feedbacks, SVG path morphing, and fluid layout orchestrations for modern web experiences.",
+    "category": "Design",
+    "date": "2026-12-12",
+    "displayDate": "Dec 12, 2026",
+    "time": "10:30 AM - 04:00 PM",
+    "location": {
+      "venue": "Design Guild Pavilion",
+      "city": "Mumbai, MH",
+      "type": "In-Person"
+    },
+    "price": 2499,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Motion Design", "Framer Motion", "UI Engineering", "Figma"],
+    "featured": true,
+    "totalSeats": 80,
+    "availableSeats": 8,
+    "organizer": {
+      "name": "VectorCraft Collective",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-03",
+    "title": "Open Source Frontend Developers Unconference",
+    "tagline": "Community-driven lightning talks, live pair programming, and architectural teardowns.",
+    "description": "A free gathering for passionate frontend developers. Share experimental web apps, debate state management paradigms, and collaborate on accessible open-source design systems.",
+    "category": "Tech",
+    "date": "2026-11-28",
+    "displayDate": "Nov 28, 2026",
+    "time": "02:00 PM - 07:00 PM",
+    "location": {
+      "venue": "Global Virtual Stage",
+      "city": "Online",
+      "type": "Virtual"
+    },
+    "price": 0,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Open Source", "React", "TypeScript", "Community"],
+    "featured": false,
+    "totalSeats": 1500,
+    "availableSeats": 430,
+    "organizer": {
+      "name": "DevSphere Global",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-04",
+    "title": "Midnight Synthwave & Electronic Live Sessions",
+    "tagline": "An immersive audiovisual concert featuring retro-futuristic analog synthesizers.",
+    "description": "Experience 5 hours of hypnotic electronic live performances synchronized with dynamic laser projection mapping and responsive surround sound stages.",
+    "category": "Music",
+    "date": "2026-12-18",
+    "displayDate": "Dec 18, 2026",
+    "time": "08:00 PM - 01:30 AM",
+    "location": {
+      "venue": "The Warehouse Arena",
+      "city": "Goa",
+      "type": "In-Person"
+    },
+    "price": 1899,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Synthwave", "Live Music", "Audiovisual", "Nightlife"],
+    "featured": true,
+    "totalSeats": 500,
+    "availableSeats": 64,
+    "organizer": {
+      "name": "Pulse Waves Media",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-05",
+    "title": "Contemporary Generative & Algorithmic Art Expo",
+    "tagline": "Curated digital art installations driven by mathematical shaders and genetic algorithms.",
+    "description": "Explore interactive galleries where art responds live to visitor movements and ambient environmental frequencies. Featuring installations from over 30 international code artists.",
+    "category": "Art",
+    "date": "2026-12-08",
+    "displayDate": "Dec 08, 2026",
+    "time": "11:00 AM - 06:00 PM",
+    "location": {
+      "venue": "National Spectrum Gallery",
+      "city": "New Delhi",
+      "type": "Hybrid"
+    },
+    "price": 899,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Generative Art", "Creative Coding", "WebGL", "Gallery"],
+    "featured": false,
+    "totalSeats": 250,
+    "availableSeats": 110,
+    "organizer": {
+      "name": "Pixel & Canvas Guild",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-06",
+    "title": "Global Venture Founders & Angel Mixer",
+    "tagline": "Connecting high-velocity tech founders with leading pre-seed and Series A angels.",
+    "description": "Fast-paced pitch rounds, private 1-on-1 breakout tables, and direct feedback sessions from seasoned operators and venture capitalists managing over ₹4,000 Cr in early-stage capital.",
+    "category": "Business",
+    "date": "2026-12-02",
+    "displayDate": "Dec 02, 2026",
+    "time": "05:00 PM - 09:30 PM",
+    "location": {
+      "venue": "Silicon Sky Lounge, Indiranagar",
+      "city": "Bengaluru, KA",
+      "type": "In-Person"
+    },
+    "price": 3499,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Startups", "Venture Capital", "Networking", "Founders"],
+    "featured": false,
+    "totalSeats": 120,
+    "availableSeats": 14,
+    "organizer": {
+      "name": "Founders Roundtable",
+      "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-07",
+    "title": "Mindful Living, Breathwork & Sound Healing",
+    "tagline": "Reset nervous system fatigue with guided breathwork, Tibetan singing bowls, and yoga.",
+    "description": "A tranquil sanctuary session designed to help digital creators and founders unplug, reduce cognitive exhaustion, and restore deep mental clarity through restorative frequencies.",
+    "category": "Wellness",
+    "date": "2026-11-29",
+    "displayDate": "Nov 29, 2026",
+    "time": "08:30 AM - 12:00 PM",
+    "location": {
+      "venue": "Prana Sanctuary Gardens",
+      "city": "Rishikesh, UT",
+      "type": "In-Person"
+    },
+    "price": 0,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Meditation", "Wellness", "Breathwork", "Recharge"],
+    "featured": false,
+    "totalSeats": 60,
+    "availableSeats": 5,
+    "organizer": {
+      "name": "Serenity Collective",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-08",
+    "title": "Spatial Computing & VisionOS Workshop",
+    "tagline": "Architecting spatial audio, realistic physics, and 3D gestures for Apple Vision Pro.",
+    "description": "Hands-on walkthrough for SwiftUI and RealityKit engineers. Learn to transition from flat 2D viewport thinking into full 360-degree interactive spatial canvases.",
+    "category": "Tech",
+    "date": "2026-12-20",
+    "displayDate": "Dec 20, 2026",
+    "time": "01:00 PM - 06:00 PM",
+    "location": {
+      "venue": "TechPark Auditorium",
+      "city": "Hyderabad, TS",
+      "type": "Hybrid"
+    },
+    "price": 2999,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Spatial Computing", "VisionOS", "XR", "3D UI"],
+    "featured": true,
+    "totalSeats": 90,
+    "availableSeats": 22,
+    "organizer": {
+      "name": "Spatial Crafters",
+      "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-09",
+    "title": "Typography in Motion: Expressive Kinetic Type",
+    "tagline": "Exploring dynamic typography, variable font axes, and expressive responsive layouts.",
+    "description": "Join acclaimed editorial art directors to learn how variable typefaces and CSS scroll-driven animations can evoke deep emotional responses across device viewports.",
+    "category": "Design",
+    "date": "2026-12-14",
+    "displayDate": "Dec 14, 2026",
+    "time": "03:00 PM - 06:30 PM",
+    "location": {
+      "venue": "Design Guild Hub",
+      "city": "Pune, MH",
+      "type": "In-Person"
+    },
+    "price": 1499,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Typography", "Kinetic Type", "Graphic Design", "Editorial"],
+    "featured": false,
+    "totalSeats": 100,
+    "availableSeats": 31,
+    "organizer": {
+      "name": "Kinetic Types Bureau",
+      "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    "id": "evt-10",
+    "title": "Indie Game Developer Showcase & Playtest",
+    "tagline": "Play unreleased indie titles, chat with solo creators, and give crucial game feedback.",
+    "description": "Over 40 independent game development teams demo their upcoming titles. From atmospheric narrative puzzles to high-octane roguelikes, test mechanics and vote for player awards.",
+    "category": "Tech",
+    "date": "2026-12-22",
+    "displayDate": "Dec 22, 2026",
+    "time": "12:00 PM - 08:00 PM",
+    "location": {
+      "venue": "Arcade Arena, CyberHub",
+      "city": "Gurugram, HR",
+      "type": "In-Person"
+    },
+    "price": 499,
+    "currency": "INR",
+    "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["Gaming", "Indie Games", "Game Design", "Interactive"],
+    "featured": false,
+    "totalSeats": 400,
+    "availableSeats": 98,
+    "organizer": {
+      "name": "Indie Haven Network",
+      "avatar": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=150&q=80"
+    }
+  }
+]

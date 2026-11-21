@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Calendar, DollarSign, RotateCcw, ArrowUpDown } from "lucide-react";
+import { Search, Calendar, IndianRupee, RotateCcw, ArrowUpDown } from "lucide-react";
 import { FilterState } from "@/types/event";
 import { Dropdown } from "@/components/form/Dropdown";
+import { formatPrice } from "@/lib/utils";
 
 interface FilterBarProps {
   filters: FilterState;
@@ -156,18 +157,18 @@ export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
             <span className="flex items-center gap-1.5">
-              <DollarSign className="w-3.5 h-3.5" />
+              <IndianRupee className="w-3.5 h-3.5" />
               <span>Max Price</span>
             </span>
             <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-              ${filters.priceRange[1]}
+              {formatPrice(filters.priceRange[1], "INR")}
             </span>
           </div>
           <input
             type="range"
             min="0"
-            max="200"
-            step="10"
+            max="9999"
+            step="250"
             disabled={filters.freeOnly}
             value={filters.priceRange[1]}
             onChange={(e) =>

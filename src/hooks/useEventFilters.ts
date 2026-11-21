@@ -7,7 +7,7 @@ export const INITIAL_FILTERS: FilterState = {
   searchQuery: "",
   selectedCategory: "All",
   dateRange: "all",
-  priceRange: [0, 200],
+  priceRange: [0, 9999],
   freeOnly: false,
   sortBy: "date-asc",
 };
