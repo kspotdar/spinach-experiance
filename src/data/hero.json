@@ -1,0 +1,44 @@
+{
+  "heroSlides": [
+    {
+      "id": "slide-1",
+      "src": "/hero-1.jpg",
+      "alt": "Vibrant high-energy festival crowd with stage lasers and holographic lighting"
+    },
+    {
+      "id": "slide-2",
+      "src": "/hero-2.jpg",
+      "alt": "Midnight electronic music concert with neon laser projection mapping and live synthesizers"
+    },
+    {
+      "id": "slide-3",
+      "src": "/hero-3.jpg",
+      "alt": "Electric night celebration with confetti bursts, colorful spotlight strobes, and cheering audience"
+    },
+    {
+      "id": "slide-4",
+      "src": "/hero-4.jpg",
+      "alt": "Keynote conference crowd with stage spotlight displays and audience seating"
+    },
+    {
+      "id": "slide-5",
+      "src": "/hero-5.jpg",
+      "alt": "Underground warehouse DJ stage with atmospheric purple haze, golden stage beams, and live crowd"
+    },
+    {
+      "id": "slide-6",
+      "src": "/hero-6.jpg",
+      "alt": "Open-air sunset music festival with hands in the air and stage pyrotechnics"
+    }
+  ],
+  "marqueeItems": [
+    "SYNTHWAVE STAGES",
+    "KINETIC MOTION LABS",
+    "FOUNDER UNCONFERENCES",
+    "SPATIAL COMPUTING",
+    "NEON WAREHOUSE NIGHTS",
+    "GENERATIVE SHADER ART",
+    "IN-REAL-LIFE ACTIVATIONS",
+    "IMMERSIVE SOUNDSCAPES"
+  ]
+}

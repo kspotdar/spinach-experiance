@@ -13,11 +13,15 @@
 }
 
 /* Industry-standard viewport overflow prevention */
-html,
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
-  max-width: 100vw;
   overflow-x: hidden;
   position: relative;
+  min-height: 100vh;
 }
 
 body {
@@ -35,4 +39,25 @@ body {
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Pure CSS Hardware-Accelerated Infinite Marquee */
+@keyframes infiniteMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-infinite-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: infiniteMarquee 28s linear infinite;
+}
+
+.animate-infinite-marquee:hover {
+  animation-play-state: paused;
 }

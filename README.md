@@ -32,13 +32,14 @@
 - [x] **Independent Search Mechanisms**:
   - **Header Search**: Displays instant quick-matches right inside a floating dropdown list without disturbing the main feed. Clicking an item auto-scrolls and highlights the card.
   - **Upcoming Experiences Search**: Dedicated search bar within the filter dashboard to dynamically filter the active grid.
-- [x] **Hero Section**: Animated gradient mesh, curated event count badge, stat counters, and magnetic CTA buttons.
+- [x] **Hero Section**: 6 dynamically cycling full-bleed HD festival/party photography backdrops (sourced from local `src/data/hero.json`), indicator dots, `#10B981` brand emerald theme, anchored bottom-left typography, and magnetic CTA buttons.
+- [x] **Global Infinite Sponsors Marquee**: Continuous GPU-accelerated marquee strip (`translate3d`), grayscale by default and transforms into full vibrant brand colors on cursor hover.
 - [x] **Comprehensive Multi-Dimensional Filters**:
   - Category selector with animated spring indicator (`All`, `Tech`, `Design`, `Music`, `Art`, `Business`, `Wellness`).
-  - Time Horizon dropdown (`Any Date`, `Today`, `Next 7 Days`, `Next 30 Days`).
-  - Interactive price range slider ($0 - $200).
+  - Custom `Dropdown` for Time Horizon (`Any Date`, `Today`, `Next 7 Days`, `Next 30 Days`) with perfectly aligned chevron.
   - Free Events toggle switch with smooth animated thumb.
-  - Sort selector (Upcoming, Furthest, Price Low-High, Price High-Low, Most In-Demand).
+  - Custom `Dropdown` for Sort selector (Upcoming, Furthest, Price Low-High, Price High-Low, Most In-Demand) + Reset action.
+  - Interactive price range slider ($0 - $200) situated at 4th position.
 - [x] **Responsive Grid & Cards (10 Local Events)**:
   - 10 realistic, locally seeded events in `src/data/events.ts`.
   - Image banner with fallback styling, date, time, location, price, tag pills, host avatar, and seats left.
@@ -52,6 +53,12 @@
 - [x] **Meaningful Custom SVG Empty State**:
   - Handcrafted SVG illustration of an event calendar with an animated floating magnifying glass and particles.
   - One-click "Clear All Filters" button.
+- [x] **Large Footer & Validated Newsletter Drop**:
+  - Multi-column footer with brand statement, navigation links, and legal resources.
+  - Newsletter input modeled after Mahamaya form architecture with custom in-line red error feedback (HTML5 tooltips suppressed).
+  - Subscriptions saved safely to `localStorage` (`spinach_subscribed_emails`).
+  - Interactive "Thank You for Subscribing" celebratory confirmation modal with auto-focus trap and ESC dismissal.
+  - Centered bottom credit: `Developed with ❤ by Kedar`.
 
 ### 2. Animation & Interaction Requirements
 - [x] **Page-Load Animation**: Coordinated staggered entrance for Header, Hero, and Filter elements.

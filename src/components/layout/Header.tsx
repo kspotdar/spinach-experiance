@@ -22,12 +22,22 @@ export function Header({
   const [mounted, setMounted] = useState(false);
   const [headerQuery, setHeaderQuery] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
     const hasDarkClass = document.documentElement.classList.contains("dark");
     setIsDark(hasDarkClass);
+  }, []);
+
+  // Monitor scroll for subtle shadow & blur effect (Clean sticky like Mahamaya)
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close search dropdown on click outside
@@ -84,8 +94,14 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-zinc-950/80 border-b border-zinc-200/60 dark:border-zinc-800/60 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+    <header
+      className={`sticky top-0 z-[60] w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md shadow-sm border-b border-zinc-200/80 dark:border-zinc-800/80"
+          : "bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-200/50 dark:border-zinc-800/50"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Animated Brand Logo */}
         <motion.div

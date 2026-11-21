@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Sparkles, ArrowDown, Compass } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import { Magnetic } from "@/components/ui/InteractiveMotion";
+import { useRef, useState, useEffect } from "react";
+import heroData from "@/data/hero.json";
 
 interface HeroProps {
   onExploreClick: () => void;
@@ -10,110 +12,149 @@ interface HeroProps {
 }
 
 export function Hero({ onExploreClick, totalEvents }: HeroProps) {
+  const containerRef = useRef<HTMLElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const { heroSlides, marqueeItems } = heroData;
+
+  // Auto-advance slideshow every 6s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  // Parallax on scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.2]);
+
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-20 sm:pb-28">
-      {/* Background Animated Gradient Blobs constrained to 100% max viewport */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[650px] h-[350px] bg-gradient-to-tr from-emerald-500/15 via-teal-400/10 to-indigo-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section
+      ref={containerRef}
+      className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[85vh] sm:min-h-[92vh] flex flex-col justify-between overflow-hidden text-white"
+    >
+      {/* 6 Direct Native HTML Img Backgrounds from hero.json */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.9 } }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <img
+              src={heroSlides[currentSlide].src}
+              alt={heroSlides[currentSlide].alt}
+              className="w-full h-full object-cover object-center"
+              loading="eager"
+            />
+          </motion.div>
+        </AnimatePresence>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Animated Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-[11px] sm:text-xs font-semibold mb-6 shadow-sm max-w-full"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-emerald-500 animate-pulse shrink-0" />
-          <span className="truncate">Discover {totalEvents}+ Curated Global Experiences</span>
-        </motion.div>
+        {/* Sophisticated Cine-Grade Radial & Directional Scrim for bottom-left text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
+      </div>
 
-        {/* Hero Title with responsive text sizing for small screens (<400px) */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.15] mb-5 sm:mb-6"
-        >
-          Where Visionaries Gather.{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500">
-            Unforgettable
-          </span>{" "}
-          Moments Happen.
-        </motion.h1>
-
-        {/* Hero Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-base sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-10"
-        >
-          Explore leading conferences, kinetic art showcases, synth concerts, and founder roundtables. Built for design-conscious explorers.
-        </motion.p>
-
-        {/* CTAs with Advanced Magnetic Interaction */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap items-center justify-center gap-4"
-        >
-          <Magnetic strength={0.4}>
+      {/* Top Bar: Minimal Slide Indicator Dots Only */}
+      <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 flex items-center justify-end">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15">
+          {heroSlides.map((_, idx) => (
             <button
-              onClick={onExploreClick}
-              className="px-7 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm sm:text-base flex items-center gap-2.5 shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/40 transition-all"
-            >
-              <Compass className="w-4 h-4" />
-              <span>Explore All Events</span>
-              <ArrowDown className="w-4 h-4" />
-            </button>
-          </Magnetic>
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Jump to backdrop ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                currentSlide === idx ? "w-6 bg-[#10b981]" : "w-2 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
-          <Magnetic strength={0.25}>
-            <button
-              onClick={() => {
-                const searchEl = document.querySelector('input[type="text"]') as HTMLInputElement;
-                if (searchEl) searchEl.focus();
-              }}
-              className="px-6 py-3.5 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-medium text-sm sm:text-base border border-zinc-200 dark:border-zinc-700 transition-colors"
-            >
-              Search by Category
-            </button>
-          </Magnetic>
-        </motion.div>
+      {/* Hero Typography & CTAs Anchored to Bottom-Left for Cinematic Contrast */}
+      <motion.div
+        style={{ y: contentY, opacity }}
+        className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pb-24 mt-auto text-left"
+      >
+        <div className="max-w-3xl">
+          {/* Scaled & Balanced Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-[1.08] text-white mb-5 drop-shadow-xl"
+          >
+            WE CONNECT PEOPLE TO <br />
+            <span className="text-[#10b981]">IN-REAL-LIFE</span> EXPERIENCES.
+          </motion.h1>
 
-        {/* Stat Highlights */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-2xl mx-auto mt-14 pt-8 border-t border-zinc-200/60 dark:border-zinc-800/60"
-        >
-          <div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white">
-              100%
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-sm sm:text-base lg:text-lg text-zinc-200 max-w-xl font-normal leading-relaxed mb-8 drop-shadow"
+          >
+            From strategy to execution, discovering culturally relevant moments that spark emotion, build loyalty, and turn audiences into communities.
+          </motion.p>
+
+          {/* Magnetic CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-wrap items-center gap-4"
+          >
+            <Magnetic strength={0.35}>
+              <button
+                onClick={onExploreClick}
+                className="px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-[#10b981] hover:bg-[#059669] text-white font-black text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2.5 shadow-2xl shadow-[#10b981]/40 transition-all cursor-pointer group"
+              >
+                <span>Explore All {totalEvents} Events</span>
+                <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+              </button>
+            </Magnetic>
+
+            <Magnetic strength={0.2}>
+              <button
+                onClick={() => {
+                  const searchEl = document.querySelector(
+                    'input[placeholder*="Filter upcoming"]'
+                  ) as HTMLInputElement;
+                  if (searchEl) {
+                    searchEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                    searchEl.focus();
+                  }
+                }}
+                className="px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white font-bold text-xs sm:text-sm border border-white/25 transition-all cursor-pointer"
+              >
+                Filter by Mood & City
+              </button>
+            </Magnetic>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Infinite Seamless Horizontal Running Slider from hero.json */}
+      <div className="relative z-10 w-full py-3 sm:py-4 border-t border-white/10 bg-black/75 backdrop-blur-md overflow-hidden select-none">
+        <div className="animate-infinite-marquee">
+          {[...marqueeItems, ...marqueeItems].map((item, idx) => (
+            <div key={idx} className="flex items-center mx-4 sm:mx-6 shrink-0">
+              <span className="text-xs sm:text-sm font-black tracking-widest uppercase text-white/90">
+                {item}
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] ml-8 sm:ml-12" />
             </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
-              Verified Organizers
-            </div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
-              Free & VIP
-            </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
-              Tier Options
-            </div>
-          </div>
-          <div className="col-span-2 sm:col-span-1">
-            <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white">
-              Instant
-            </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-0.5">
-              Offline Bookmarks
-            </div>
-          </div>
-        </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

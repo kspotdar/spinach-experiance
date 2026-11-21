@@ -47,6 +47,14 @@ export const metadata: Metadata = {
     creator: "@kedarpotdar",
     images: [`${SITE.url}/og-image.png`],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
+    ],
+  },
   alternates: {
     canonical: SITE.url,
   },

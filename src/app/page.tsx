@@ -6,6 +6,8 @@ import { Hero } from "@/components/layout/Hero";
 import { FilterBar } from "@/components/filters/FilterBar";
 import { EventGrid } from "@/components/events/EventGrid";
 import { SavedDrawer } from "@/components/layout/SavedDrawer";
+import { SponsorsMarquee } from "@/components/layout/SponsorsMarquee";
+import { Footer } from "@/components/layout/Footer";
 import { EVENTS_DATA } from "@/data/events";
 import { useSavedEvents } from "@/hooks/useSavedEvents";
 import { useEventFilters } from "@/hooks/useEventFilters";
@@ -66,7 +68,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-emerald-500 selection:text-white overflow-x-hidden w-full max-w-[100vw]">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-emerald-500 selection:text-white w-full">
       {/* Scroll-triggered Reading Progress Indicator */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 origin-left z-50"
@@ -84,15 +86,15 @@ export default function Home() {
         {/* Hero Section */}
         <Hero onExploreClick={scrollToEvents} totalEvents={totalCount} />
 
-        {/* Discovery & Filters Section */}
-        <section ref={eventsSectionRef} id="explore" className="pt-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        {/* Discovery & Filters Section with Generous Consistent Rhythm */}
+        <section ref={eventsSectionRef} id="explore" className="pt-20 sm:pt-28">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
             <div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
                 <Sparkles className="w-4 h-4" />
                 <span>Curated Schedule</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 mt-1">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
                 Upcoming Experiences
               </h2>
             </div>
@@ -116,6 +118,11 @@ export default function Home() {
             onResetFilters={resetFilters}
           />
         </section>
+
+        {/* Global Sponsors Marquee Strip (Greyscale by default, Color on Hover) */}
+        <div className="mt-20 sm:mt-28">
+          <SponsorsMarquee />
+        </div>
       </main>
 
       {/* Saved Events Drawer */}
@@ -128,15 +135,8 @@ export default function Home() {
         onSelectEvent={handleSelectEventFromHeaderOrDrawer}
       />
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 py-10 bg-white/50 dark:bg-zinc-900/40 text-center text-xs text-zinc-500 dark:text-zinc-400">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 PulseFest Experience Engine. Local JSON Driven Discovery.</p>
-          <div className="flex items-center gap-1">
-            <span>Engineered with React 19, TypeScript & Framer Motion</span>
-          </div>
-        </div>
-      </footer>
+      {/* Comprehensive Large Footer with Newsletter & LocalStorage Persistence */}
+      <Footer />
     </div>
   );
 }

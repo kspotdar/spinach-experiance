@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Calendar, DollarSign, RotateCcw } from "lucide-react";
+import { Search, Calendar, DollarSign, RotateCcw, ArrowUpDown } from "lucide-react";
 import { FilterState } from "@/types/event";
+import { Dropdown } from "@/components/form/Dropdown";
 
 interface FilterBarProps {
   filters: FilterState;
@@ -19,11 +20,19 @@ const DATE_OPTIONS = [
   { label: "Next 30 Days", value: "this-month" },
 ];
 
+const SORT_OPTIONS = [
+  { label: "Date: Upcoming first", value: "date-asc" },
+  { label: "Date: Furthest first", value: "date-desc" },
+  { label: "Price: Low to High", value: "price-asc" },
+  { label: "Price: High to Low", value: "price-desc" },
+  { label: "Most In-Demand", value: "popular" },
+];
+
 export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
   return (
-    <div className="w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-zinc-800 p-4 sm:p-7 shadow-lg mb-8 sm:mb-10 transition-all overflow-hidden">
+    <div className="w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-zinc-800 p-5 sm:p-8 shadow-lg mb-12 sm:mb-16 transition-all relative z-30">
       {/* Dedicated Section Search Bar */}
-      <div className="relative mb-6">
+      <div className="relative mb-7">
         <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
@@ -71,56 +80,24 @@ export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
         })}
       </div>
 
-      {/* Secondary Controls: Date, Price, Free Toggle, Sort */}
+      {/* Secondary Controls: 1. Date, 2. Free Toggle, 3. Sort, 4. Price Slider */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-end pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
-        {/* Date Filter */}
-        <div className="space-y-1.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-            <Calendar className="w-3.5 h-3.5" />
-            <span>Time Horizon</span>
-          </label>
-          <select
-            value={filters.dateRange}
-            onChange={(e) => onChange({ dateRange: e.target.value })}
-            className="w-full px-3 py-2.5 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
-          >
-            {DATE_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* 1. Date Filter using custom Dropdown with properly aligned chevron */}
+        <Dropdown
+          id="date-filter"
+          label={
+            <>
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Time Horizon</span>
+            </>
+          }
+          options={DATE_OPTIONS}
+          value={filters.dateRange}
+          onChange={(val) => onChange({ dateRange: val })}
+        />
 
-        {/* Price Slider */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-            <span className="flex items-center gap-1.5">
-              <DollarSign className="w-3.5 h-3.5" />
-              <span>Max Price</span>
-            </span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-              ${filters.priceRange[1]}
-            </span>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="200"
-            step="10"
-            disabled={filters.freeOnly}
-            value={filters.priceRange[1]}
-            onChange={(e) =>
-              onChange({ priceRange: [0, parseInt(e.target.value, 10)] })
-            }
-            className={`w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 ${
-              filters.freeOnly ? "opacity-30 cursor-not-allowed" : ""
-            }`}
-          />
-        </div>
-
-        {/* Free Events Toggle */}
-        <div className="flex items-center justify-between sm:justify-start gap-3 p-2 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-700/60">
+        {/* 2. Free Events Toggle */}
+        <div className="flex items-center justify-between sm:justify-start gap-3 p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-700/60 h-[46px]">
           <label
             htmlFor="freeOnlyToggle"
             className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 cursor-pointer select-none"
@@ -145,21 +122,23 @@ export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
           </button>
         </div>
 
-        {/* Sort & Reset Actions */}
-        <div className="flex items-center gap-2">
-          <select
-            value={filters.sortBy}
-            onChange={(e) =>
-              onChange({ sortBy: e.target.value as FilterState["sortBy"] })
+        {/* 3. Sort & Reset Actions with custom Dropdown */}
+        <div className="flex items-end gap-2">
+          <Dropdown
+            id="sort-filter"
+            label={
+              <>
+                <ArrowUpDown className="w-3.5 h-3.5" />
+                <span>Sort Events</span>
+              </>
             }
-            className="flex-1 px-3 py-2.5 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
-          >
-            <option value="date-asc">Date: Upcoming first</option>
-            <option value="date-desc">Date: Furthest first</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="popular">Most In-Demand</option>
-          </select>
+            options={SORT_OPTIONS}
+            value={filters.sortBy}
+            onChange={(val) =>
+              onChange({ sortBy: val as FilterState["sortBy"] })
+            }
+            className="flex-1"
+          />
 
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -167,10 +146,37 @@ export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
             onClick={onReset}
             title="Reset Filters"
             aria-label="Reset all filters"
-            className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+            className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer shrink-0 h-[46px] flex items-center justify-center"
           >
             <RotateCcw className="w-4 h-4" />
           </motion.button>
+        </div>
+
+        {/* 4. Price Slider (4th position) */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            <span className="flex items-center gap-1.5">
+              <DollarSign className="w-3.5 h-3.5" />
+              <span>Max Price</span>
+            </span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+              ${filters.priceRange[1]}
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="200"
+            step="10"
+            disabled={filters.freeOnly}
+            value={filters.priceRange[1]}
+            onChange={(e) =>
+              onChange({ priceRange: [0, parseInt(e.target.value, 10)] })
+            }
+            className={`w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-emerald-600 ${
+              filters.freeOnly ? "opacity-30 cursor-not-allowed" : ""
+            }`}
+          />
         </div>
       </div>
     </div>

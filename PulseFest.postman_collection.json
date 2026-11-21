@@ -1,0 +1,99 @@
+{
+  "info": {
+    "_postman_id": "a93c7d1e-8420-4df2-b251-pulsefest001",
+    "name": "PulseFest Event Discovery Engine - Local Client Schema & Mock API Collection",
+    "description": "Postman Collection documenting the client-side data contracts, event schema, filter endpoints, and offline payload structures for the Spinach Experience Design UI practical assessment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events (Local Seed Data)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/mock/events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "mock", "events"]
+            },
+            "description": "Returns the complete array of 10 curated local events seeded in `src/data/events.ts` including titles, locations, dates, prices, hosts, and categories."
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Events by Category & Price",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/mock/events?category=Tech&maxPrice=150&freeOnly=false",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "mock", "events"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Tech",
+                  "description": "Filter category: All | Tech | Design | Music | Art | Business | Wellness"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "150",
+                  "description": "Maximum price boundary"
+                },
+                {
+                  "key": "freeOnly",
+                  "value": "false",
+                  "description": "Boolean flag for zero-cost passes"
+                }
+              ]
+            },
+            "description": "Mock query structure demonstrating the client-side query parameters implemented in `useEventFilters.ts`."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Newsletter",
+      "item": [
+        {
+          "name": "Newsletter Subscription (LocalStorage Schema)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"explorer@pulsefest.live\",\n  \"subscribedAt\": \"2026-11-21T17:15:00.000Z\",\n  \"source\": \"footer_newsletter\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/mock/newsletter",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "mock", "newsletter"]
+            },
+            "description": "Payload contract stored offline in `localStorage` under key `spinach_subscribed_emails`."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
