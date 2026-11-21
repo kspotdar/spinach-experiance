@@ -85,7 +85,7 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-zinc-950/80 border-b border-zinc-200/60 dark:border-zinc-800/60 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Animated Brand Logo */}
         <motion.div
@@ -122,7 +122,7 @@ export function Header({
         </motion.div>
 
         {/* Header Instant Search Bar with Inline Dropdown Results */}
-        <div ref={searchContainerRef} className="relative flex-1 max-w-md mx-2 sm:mx-6">
+        <div ref={searchContainerRef} className="relative flex-1 max-w-xs sm:max-w-md mx-1 sm:mx-6 min-w-0">
           <div className="relative group">
             <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-emerald-500 transition-colors pointer-events-none" />
             <input
@@ -222,7 +222,7 @@ export function Header({
         </div>
 
         {/* Controls: Theme Toggle & Saved Drawer Button */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Theme Toggle Button */}
           {mounted && (
             <motion.button
@@ -230,7 +230,7 @@ export function Header({
               whileHover={{ scale: 1.05 }}
               onClick={toggleTheme}
               aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-              className="p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 border border-zinc-200/80 dark:border-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
+              className="p-2 sm:p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 border border-zinc-200/80 dark:border-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer shrink-0"
             >
               {isDark ? (
                 <Sun className="w-4 h-4 text-amber-400 animate-spin-slow" />
@@ -246,11 +246,11 @@ export function Header({
             whileHover={{ scale: 1.03 }}
             onClick={onOpenDrawer}
             aria-label={`Open saved events drawer (${savedCount} saved)`}
-            className="relative flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 cursor-pointer"
+            className="relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 cursor-pointer shrink-0"
           >
-            <Bookmark className="w-4 h-4 fill-white/20" />
+            <Bookmark className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white/20 shrink-0" />
             <span className="hidden sm:inline">Saved</span>
-            <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-white text-emerald-700 text-xs font-bold">
+            <span className="flex items-center justify-center min-w-[18px] sm:min-w-[20px] h-4 sm:h-5 px-1 sm:px-1.5 rounded-full bg-white text-emerald-700 text-[10px] sm:text-xs font-bold">
               {savedCount}
             </span>
           </motion.button>

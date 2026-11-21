@@ -21,7 +21,7 @@ const DATE_OPTIONS = [
 
 export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
   return (
-    <div className="w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-3xl border border-zinc-200/80 dark:border-zinc-800 p-5 sm:p-7 shadow-lg mb-10 transition-all">
+    <div className="w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-zinc-800 p-4 sm:p-7 shadow-lg mb-8 sm:mb-10 transition-all overflow-hidden">
       {/* Dedicated Section Search Bar */}
       <div className="relative mb-6">
         <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />

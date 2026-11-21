@@ -11,9 +11,9 @@ interface HeroProps {
 
 export function Hero({ onExploreClick, totalEvents }: HeroProps) {
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28">
-      {/* Background Animated Gradient Blobs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-gradient-to-tr from-emerald-500/15 via-teal-400/10 to-indigo-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-20 sm:pb-28">
+      {/* Background Animated Gradient Blobs constrained to 100% max viewport */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[650px] h-[350px] bg-gradient-to-tr from-emerald-500/15 via-teal-400/10 to-indigo-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Animated Badge */}
@@ -21,18 +21,18 @@ export function Hero({ onExploreClick, totalEvents }: HeroProps) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-xs font-semibold mb-6 shadow-sm"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-[11px] sm:text-xs font-semibold mb-6 shadow-sm max-w-full"
         >
-          <Sparkles className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
-          <span>Discover {totalEvents}+ Curated Global Experiences</span>
+          <Sparkles className="w-3.5 h-3.5 text-emerald-500 animate-pulse shrink-0" />
+          <span className="truncate">Discover {totalEvents}+ Curated Global Experiences</span>
         </motion.div>
 
-        {/* Hero Title */}
+        {/* Hero Title with responsive text sizing for small screens (<400px) */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.1] mb-6"
+          className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.15] mb-5 sm:mb-6"
         >
           Where Visionaries Gather.{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500">
