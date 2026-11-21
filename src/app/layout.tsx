@@ -49,10 +49,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/pulsefest-icon.jpg", type: "image/jpeg" },
     ],
+    shortcut: "/pulsefest-icon.jpg",
     apple: [
-      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
+      { url: "/pulsefest-icon.jpg", sizes: "180x180", type: "image/jpeg" },
     ],
   },
   alternates: {

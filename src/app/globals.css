@@ -61,3 +61,33 @@ body {
 .animate-infinite-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Kinetic Liquid Gradient Shimmer for PulseFest Wordmark */
+@keyframes liquidPulseGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-liquid-pulse {
+  background: linear-gradient(
+    90deg,
+    #10b981 0%,
+    #34d399 20%,
+    #6ee7b7 40%,
+    #059669 60%,
+    #10b981 80%,
+    #34d399 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: liquidPulseGradient 3.5s ease infinite;
+}

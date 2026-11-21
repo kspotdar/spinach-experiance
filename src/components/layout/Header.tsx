@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Moon, Sun, Bookmark, Sparkles, MapPin, Calendar, ArrowRight } from "lucide-react";
+import { Search, Moon, Sun, Bookmark, MapPin, Calendar, ArrowRight } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { EVENTS_DATA } from "@/data/events";
 import { formatPrice } from "@/lib/utils";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import Image from "next/image";
 
 interface HeaderProps {
@@ -103,38 +104,14 @@ export function Header({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Animated Brand Logo */}
+        {/* Animated Brand Typography (Logo Text with Live Waveform Shimmer & Pulse) */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex items-center gap-3 cursor-pointer select-none group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-shadow">
-            <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-[14px] flex items-center justify-center overflow-hidden">
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="text-emerald-500"
-              >
-                <Sparkles className="w-6 h-6" />
-              </motion.div>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-xl tracking-tight text-zinc-900 dark:text-white">
-                Pulse<span className="text-emerald-500">Fest</span>
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                Live
-              </span>
-            </div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium hidden sm:block">
-              Experience Discovery Engine
-            </p>
-          </div>
+          <BrandLogo />
         </motion.div>
 
         {/* Header Instant Search Bar with Inline Dropdown Results */}
