@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, DollarSign, RotateCcw } from "lucide-react";
+import { Search, Calendar, DollarSign, RotateCcw } from "lucide-react";
 import { FilterState } from "@/types/event";
 
 interface FilterBarProps {
   filters: FilterState;
   onChange: (updated: Partial<FilterState>) => void;
   onReset: () => void;
-  filteredCount: number;
 }
 
 const CATEGORIES = ["All", "Tech", "Design", "Music", "Art", "Business", "Wellness"];
@@ -20,13 +19,31 @@ const DATE_OPTIONS = [
   { label: "Next 30 Days", value: "this-month" },
 ];
 
-export function FilterBar({
-  filters,
-  onChange,
-  onReset,
-}: Omit<FilterBarProps, "filteredCount">) {
+export function FilterBar({ filters, onChange, onReset }: FilterBarProps) {
   return (
     <div className="w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-3xl border border-zinc-200/80 dark:border-zinc-800 p-5 sm:p-7 shadow-lg mb-10 transition-all">
+      {/* Dedicated Section Search Bar */}
+      <div className="relative mb-6">
+        <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+        <input
+          type="text"
+          value={filters.searchQuery}
+          onChange={(e) => onChange({ searchQuery: e.target.value })}
+          placeholder="Filter upcoming experiences by keyword, speaker, city, or tags..."
+          aria-label="Filter events by search keyword"
+          className="w-full pl-10 pr-10 py-3 rounded-2xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all cursor-text shadow-sm"
+        />
+        {filters.searchQuery && (
+          <button
+            onClick={() => onChange({ searchQuery: "" })}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer p-1"
+            aria-label="Clear filter search"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
       {/* Category Pills with animated tab indicator */}
       <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
         {CATEGORIES.map((cat) => {
@@ -35,7 +52,7 @@ export function FilterBar({
             <button
               key={cat}
               onClick={() => onChange({ selectedCategory: cat })}
-              className={`relative px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors select-none ${
+              className={`relative px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors select-none cursor-pointer ${
                 isActive
                   ? "text-white"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 bg-zinc-100 dark:bg-zinc-800/60"
@@ -65,7 +82,7 @@ export function FilterBar({
           <select
             value={filters.dateRange}
             onChange={(e) => onChange({ dateRange: e.target.value })}
-            className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+            className="w-full px-3 py-2.5 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
           >
             {DATE_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -135,7 +152,7 @@ export function FilterBar({
             onChange={(e) =>
               onChange({ sortBy: e.target.value as FilterState["sortBy"] })
             }
-            className="flex-1 px-3 py-2 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+            className="flex-1 px-3 py-2.5 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
           >
             <option value="date-asc">Date: Upcoming first</option>
             <option value="date-desc">Date: Furthest first</option>
@@ -150,7 +167,7 @@ export function FilterBar({
             onClick={onReset}
             title="Reset Filters"
             aria-label="Reset all filters"
-            className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+            className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
           </motion.button>

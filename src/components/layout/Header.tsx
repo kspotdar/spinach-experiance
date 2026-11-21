@@ -1,29 +1,47 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, Moon, Sun, Bookmark, Sparkles } from "lucide-react";
-import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Moon, Sun, Bookmark, Sparkles, MapPin, Calendar, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { EVENTS_DATA } from "@/data/events";
+import { formatPrice } from "@/lib/utils";
+import Image from "next/image";
 
 interface HeaderProps {
-  searchQuery: string;
-  onSearchChange: (q: string) => void;
   savedCount: number;
   onOpenDrawer: () => void;
+  onSelectEvent?: (eventId: string) => void;
 }
 
 export function Header({
-  searchQuery,
-  onSearchChange,
   savedCount,
   onOpenDrawer,
+  onSelectEvent,
 }: HeaderProps) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [headerQuery, setHeaderQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
     const hasDarkClass = document.documentElement.classList.contains("dark");
     setIsDark(hasDarkClass);
+  }, []);
+
+  // Close search dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const toggleTheme = () => {
@@ -38,8 +56,35 @@ export function Header({
     }
   };
 
+  // Dedicated Header Quick Search Results
+  const searchResults = useMemo(() => {
+    if (!headerQuery.trim()) return [];
+    const q = headerQuery.toLowerCase();
+    return EVENTS_DATA.filter((evt) => {
+      return (
+        evt.title.toLowerCase().includes(q) ||
+        evt.category.toLowerCase().includes(q) ||
+        evt.location.city.toLowerCase().includes(q) ||
+        evt.tags.some((t) => t.toLowerCase().includes(q))
+      );
+    }).slice(0, 5); // top 5 results in header
+  }, [headerQuery]);
+
+  const handleSelectEvent = (id: string) => {
+    setIsDropdownOpen(false);
+    setHeaderQuery("");
+    if (onSelectEvent) {
+      onSelectEvent(id);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/70 dark:bg-zinc-950/70 border-b border-zinc-200/60 dark:border-zinc-800/60 transition-colors duration-300">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-zinc-950/80 border-b border-zinc-200/60 dark:border-zinc-800/60 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
         {/* Animated Brand Logo */}
@@ -76,28 +121,104 @@ export function Header({
           </div>
         </motion.div>
 
-        {/* Global Instant Search */}
-        <div className="flex-1 max-w-md mx-2 sm:mx-6">
+        {/* Header Instant Search Bar with Inline Dropdown Results */}
+        <div ref={searchContainerRef} className="relative flex-1 max-w-md mx-2 sm:mx-6">
           <div className="relative group">
             <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-emerald-500 transition-colors pointer-events-none" />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search talks, concerts, workshops, or cities..."
-              aria-label="Search events"
-              className="w-full pl-10 pr-4 py-2.5 rounded-full text-xs sm:text-sm bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all shadow-inner"
+              value={headerQuery}
+              onChange={(e) => {
+                setHeaderQuery(e.target.value);
+                setIsDropdownOpen(true);
+              }}
+              onFocus={() => {
+                if (headerQuery.trim()) setIsDropdownOpen(true);
+              }}
+              placeholder="Quick search events in dropdown..."
+              aria-label="Quick search events"
+              className="w-full pl-10 pr-8 py-2.5 rounded-full text-xs sm:text-sm bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all cursor-text shadow-inner"
             />
-            {searchQuery && (
+            {headerQuery && (
               <button
-                onClick={() => onSearchChange("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-                aria-label="Clear search"
+                onClick={() => {
+                  setHeaderQuery("");
+                  setIsDropdownOpen(false);
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer"
+                aria-label="Clear header search"
               >
                 ✕
               </button>
             )}
           </div>
+
+          {/* Quick Search Dropdown Menu */}
+          <AnimatePresence>
+            {isDropdownOpen && headerQuery.trim() && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 shadow-2xl overflow-hidden z-50 p-2"
+                role="listbox"
+              >
+                {searchResults.length === 0 ? (
+                  <div className="p-4 text-center text-xs text-zinc-500 dark:text-zinc-400">
+                    No matching events found for &quot;{headerQuery}&quot;
+                  </div>
+                ) : (
+                  <div>
+                    <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                      Quick Matches ({searchResults.length})
+                    </div>
+                    {searchResults.map((evt) => (
+                      <div
+                        key={evt.id}
+                        onClick={() => handleSelectEvent(evt.id)}
+                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer transition-colors group"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0">
+                          <Image
+                            src={evt.image}
+                            alt={evt.title}
+                            fill
+                            sizes="44px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                              {evt.title}
+                            </h4>
+                            <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 ml-2">
+                              {formatPrice(evt.price, evt.currency)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                            <span className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-zinc-400" />
+                              {evt.displayDate}
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1">
+                              <MapPin className="w-3 h-3 text-zinc-400" />
+                              {evt.location.city}
+                            </span>
+                          </div>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Controls: Theme Toggle & Saved Drawer Button */}
@@ -109,7 +230,7 @@ export function Header({
               whileHover={{ scale: 1.05 }}
               onClick={toggleTheme}
               aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-              className="p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 border border-zinc-200/80 dark:border-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+              className="p-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 border border-zinc-200/80 dark:border-zinc-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/40 cursor-pointer"
             >
               {isDark ? (
                 <Sun className="w-4 h-4 text-amber-400 animate-spin-slow" />
@@ -125,7 +246,7 @@ export function Header({
             whileHover={{ scale: 1.03 }}
             onClick={onOpenDrawer}
             aria-label={`Open saved events drawer (${savedCount} saved)`}
-            className="relative flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900"
+            className="relative flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 cursor-pointer"
           >
             <Bookmark className="w-4 h-4 fill-white/20" />
             <span className="hidden sm:inline">Saved</span>

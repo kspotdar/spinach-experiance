@@ -12,9 +12,10 @@ interface EventCardProps {
   event: EventItem;
   isSaved: boolean;
   onToggleSave: (id: string) => void;
+  onClickCard?: () => void;
 }
 
-export function EventCard({ event, isSaved, onToggleSave }: EventCardProps) {
+export function EventCard({ event, isSaved, onToggleSave, onClickCard }: EventCardProps) {
   const handleSaveClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onToggleSave(event.id);
@@ -37,12 +38,14 @@ export function EventCard({ event, isSaved, onToggleSave }: EventCardProps) {
   return (
     <TiltCard className="h-full">
       <motion.article
+        id={event.id}
         whileHover={{ y: -6 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="h-full flex flex-col bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 shadow-md hover:shadow-2xl hover:shadow-emerald-500/10 transition-shadow duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-emerald-500"
+        onClick={onClickCard}
+        className="h-full flex flex-col bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 shadow-md hover:shadow-2xl hover:shadow-emerald-500/10 transition-shadow duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-emerald-500 cursor-pointer select-none"
       >
         {/* Event Media Banner */}
-        <div className="relative w-full h-52 overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+        <div className="relative w-full h-52 overflow-hidden bg-zinc-100 dark:bg-zinc-800 cursor-pointer">
           <Image
             src={event.image}
             alt={event.title}
@@ -65,7 +68,7 @@ export function EventCard({ event, isSaved, onToggleSave }: EventCardProps) {
             whileHover={{ scale: 1.12 }}
             onClick={handleSaveClick}
             aria-label={isSaved ? `Remove ${event.title} from saved` : `Save ${event.title}`}
-            className={`absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md transition-colors shadow-md ${
+            className={`absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md transition-colors shadow-md cursor-pointer ${
               isSaved
                 ? "bg-emerald-500 text-white shadow-emerald-500/40"
                 : "bg-black/50 text-white/90 hover:bg-black/70 hover:text-white"
@@ -96,7 +99,7 @@ export function EventCard({ event, isSaved, onToggleSave }: EventCardProps) {
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
+        <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between cursor-pointer">
           <div>
             {/* Date & Time metadata */}
             <div className="flex items-center gap-4 text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2.5">
@@ -133,7 +136,7 @@ export function EventCard({ event, isSaved, onToggleSave }: EventCardProps) {
             </div>
           </div>
 
-          {/* Card Footer: Seats & RSVP */}
+          {/* Card Footer: Host & Seats info */}
           <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative w-7 h-7 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700">

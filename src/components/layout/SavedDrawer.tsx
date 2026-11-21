@@ -13,6 +13,7 @@ interface SavedDrawerProps {
   savedEvents: EventItem[];
   onRemove: (id: string) => void;
   onClearAll: () => void;
+  onSelectEvent?: (id: string) => void;
 }
 
 export function SavedDrawer({
@@ -21,6 +22,7 @@ export function SavedDrawer({
   savedEvents,
   onRemove,
   onClearAll,
+  onSelectEvent,
 }: SavedDrawerProps) {
   // ESC key handler for accessibility
   useEffect(() => {
@@ -44,6 +46,18 @@ export function SavedDrawer({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  const handleCardClick = (id: string) => {
+    onClose();
+    if (onSelectEvent) {
+      onSelectEvent(id);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -86,7 +100,7 @@ export function SavedDrawer({
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
                 aria-label="Close drawer"
-                className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 transition-colors"
+                className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -107,7 +121,7 @@ export function SavedDrawer({
                   </p>
                   <button
                     onClick={onClose}
-                    className="px-4 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors"
+                    className="px-4 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors cursor-pointer"
                   >
                     Browse Events
                   </button>
@@ -121,15 +135,16 @@ export function SavedDrawer({
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, x: 50, transition: { duration: 0.2 } }}
-                      className="group relative flex gap-3 p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-2xl border border-zinc-200/80 dark:border-zinc-700/60 transition-all hover:shadow-md"
+                      onClick={() => handleCardClick(event.id)}
+                      className="group relative flex gap-3 p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-2xl border border-zinc-200/80 dark:border-zinc-700/60 transition-all hover:shadow-md cursor-pointer select-none"
                     >
-                      <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
+                      <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 cursor-pointer">
                         <Image
                           src={event.image}
                           alt={event.title}
                           fill
                           sizes="80px"
-                          className="object-cover"
+                          className="object-cover group-hover:scale-105 transition-transform"
                         />
                       </div>
 
@@ -137,7 +152,7 @@ export function SavedDrawer({
                         <span className="text-[10px] font-semibold tracking-wider uppercase text-emerald-600 dark:text-emerald-400">
                           {event.category}
                         </span>
-                        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">
+                        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                           {event.title}
                         </h4>
                         <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mt-1">
@@ -156,9 +171,12 @@ export function SavedDrawer({
 
                       {/* Remove Button */}
                       <button
-                        onClick={() => onRemove(event.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemove(event.id);
+                        }}
                         aria-label={`Remove ${event.title} from saved`}
-                        className="absolute top-3 right-3 p-1.5 rounded-lg text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="absolute top-3 right-3 p-1.5 rounded-lg text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -180,15 +198,15 @@ export function SavedDrawer({
                 <div className="flex gap-2.5">
                   <button
                     onClick={onClearAll}
-                    className="px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    className="px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                   >
                     Clear All
                   </button>
                   <button
                     onClick={() => {
-                      alert("RSVP registrations exported for saved events!");
+                      alert("RSVP confirmation summary generated!");
                     }}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-600/20 transition-colors"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-600/20 transition-colors cursor-pointer"
                   >
                     <span>Bulk RSVP</span>
                     <ArrowRight className="w-3.5 h-3.5" />

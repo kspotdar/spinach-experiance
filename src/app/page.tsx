@@ -16,7 +16,7 @@ export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const eventsSectionRef = useRef<HTMLDivElement>(null);
 
-  // Scroll Progress Bar for advanced interaction
+  // Scroll Progress Bar for advanced scroll interaction
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -33,7 +33,7 @@ export default function Home() {
     savedCount,
   } = useSavedEvents(EVENTS_DATA);
 
-  // Filters and search logic
+  // Dedicated in-section filters and search logic
   const {
     filters,
     setFilters,
@@ -49,6 +49,22 @@ export default function Home() {
     }
   };
 
+  const handleSelectEventFromHeaderOrDrawer = (id: string) => {
+    // If the event is currently filtered out, reset category/search so it shows up
+    const isCurrentlyVisible = filteredEvents.some((e) => e.id === id);
+    if (!isCurrentlyVisible) {
+      resetFilters();
+    }
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-4", "ring-emerald-500");
+        setTimeout(() => el.classList.remove("ring-4", "ring-emerald-500"), 2000);
+      }
+    }, 150);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-emerald-500 selection:text-white">
       {/* Scroll-triggered Reading Progress Indicator */}
@@ -57,12 +73,11 @@ export default function Home() {
         style={{ scaleX }}
       />
 
-      {/* Header */}
+      {/* Header with Quick Dropdown Search */}
       <Header
-        searchQuery={filters.searchQuery}
-        onSearchChange={(q) => setFilters((prev) => ({ ...prev, searchQuery: q }))}
         savedCount={savedCount}
         onOpenDrawer={() => setIsDrawerOpen(true)}
+        onSelectEvent={handleSelectEventFromHeaderOrDrawer}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-24">
@@ -86,7 +101,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Interactive Filters */}
+          {/* Dedicated Section Filters & Search */}
           <FilterBar
             filters={filters}
             onChange={(updated) => setFilters((prev) => ({ ...prev, ...updated }))}
@@ -110,6 +125,7 @@ export default function Home() {
         savedEvents={savedEvents}
         onRemove={toggleSave}
         onClearAll={clearAllSaved}
+        onSelectEvent={handleSelectEventFromHeaderOrDrawer}
       />
 
       {/* Footer */}
