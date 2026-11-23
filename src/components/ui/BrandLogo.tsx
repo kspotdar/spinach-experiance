@@ -89,7 +89,7 @@ export function BrandLogo() {
           </svg>
         </div>
 
-        <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-semibold text-zinc-400 dark:text-zinc-500 tracking-wider mt-0.5 sm:-mt-0.5 truncate max-w-[130px] sm:max-w-none">
+        <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-semibold text-zinc-400 dark:text-zinc-500 tracking-wider mt-0.5 sm:-mt-0.5 leading-tight whitespace-normal max-w-[130px] sm:max-w-none">
           Experience Discovery Engine
         </p>
       </div>
