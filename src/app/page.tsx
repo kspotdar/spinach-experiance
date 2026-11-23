@@ -11,8 +11,8 @@ import { Footer } from "@/components/layout/Footer";
 import { EVENTS_DATA } from "@/data/events";
 import { useSavedEvents } from "@/hooks/useSavedEvents";
 import { useEventFilters } from "@/hooks/useEventFilters";
-import { motion, useScroll, useSpring } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Sparkles, Bookmark } from "lucide-react";
 
 export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -134,6 +134,30 @@ export default function Home() {
         onClearAll={clearAllSaved}
         onSelectEvent={handleSelectEventFromHeaderOrDrawer}
       />
+
+      {/* Floating Action Button (Mobile View - Chatbot Style Bottom Right, hides when drawer is open) */}
+      <AnimatePresence>
+        {!isDrawerOpen && (
+          <motion.button
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => setIsDrawerOpen(true)}
+            aria-label={`Open saved events (${savedCount} saved)`}
+            className="sm:hidden fixed bottom-6 right-5 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-emerald-600 text-white shadow-[0_10px_25px_rgba(16,185,129,0.45)] border-2 border-white/20 hover:bg-emerald-500 transition-all focus:outline-none focus:ring-4 focus:ring-emerald-500/30"
+          >
+            <Bookmark className="w-6 h-6 fill-white/20" />
+            {savedCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[22px] h-[22px] px-1 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-2 border-white dark:border-zinc-900 text-[11px] font-extrabold shadow-md animate-pulse">
+                {savedCount}
+              </span>
+            )}
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Comprehensive Large Footer with Newsletter & LocalStorage Persistence */}
       <Footer />

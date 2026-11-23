@@ -62,28 +62,6 @@ export function EventCard({ event, isSaved, onToggleSave, onClickCard }: EventCa
             {event.category}
           </span>
 
-          {/* Interactive Bookmark / Save Button */}
-          <motion.button
-            whileTap={{ scale: 0.8 }}
-            whileHover={{ scale: 1.12 }}
-            onClick={handleSaveClick}
-            aria-label={isSaved ? `Remove ${event.title} from saved` : `Save ${event.title}`}
-            className={`absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md transition-colors shadow-md cursor-pointer ${
-              isSaved
-                ? "bg-emerald-500 text-white shadow-emerald-500/40"
-                : "bg-black/50 text-white/90 hover:bg-black/70 hover:text-white"
-            }`}
-          >
-            <motion.div
-              animate={isSaved ? { scale: [1, 1.35, 1] } : { scale: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Bookmark
-                className={`w-4 h-4 ${isSaved ? "fill-current" : ""}`}
-              />
-            </motion.div>
-          </motion.button>
-
           {/* Price Tag Overlay */}
           <div className="absolute bottom-3 left-4">
             <span className="inline-block px-3 py-1 rounded-xl text-xs font-extrabold bg-emerald-600 text-white shadow-lg">
@@ -159,6 +137,27 @@ export function EventCard({ event, isSaved, onToggleSave, onClickCard }: EventCa
               <Users className="w-3.5 h-3.5 text-emerald-500" />
               <span>{event.availableSeats} left</span>
             </div>
+          </div>
+
+          {/* Primary Action Button: Save / Saved Event CTA */}
+          <div className="mt-4 pt-3 border-t border-dashed border-zinc-200 dark:border-zinc-800">
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.01 }}
+              onClick={handleSaveClick}
+              aria-label={isSaved ? `Remove ${event.title} from saved` : `Save ${event.title}`}
+              className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm ${
+                isSaved
+                  ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50"
+                  : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20 hover:shadow-emerald-600/35"
+              }`}
+            >
+              <Bookmark
+                className={`w-4 h-4 ${isSaved ? "fill-emerald-600 dark:fill-emerald-400" : "fill-white/20"}`}
+              />
+              <span>{isSaved ? "Saved to My List" : "Save Experience"}</span>
+            </motion.button>
           </div>
         </div>
       </motion.article>

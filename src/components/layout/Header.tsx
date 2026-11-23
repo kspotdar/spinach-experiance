@@ -233,16 +233,16 @@ export function Header({
             </motion.button>
           )}
 
-          {/* Saved Drawer Trigger Button */}
+          {/* Saved Drawer Trigger Button (Desktop/Tablet Header - hidden on mobile) */}
           <motion.button
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.03 }}
             onClick={onOpenDrawer}
             aria-label={`Open saved events drawer (${savedCount} saved)`}
-            className="relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 cursor-pointer shrink-0"
+            className="hidden sm:flex relative items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900 cursor-pointer shrink-0"
           >
             <Bookmark className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white/20 shrink-0" />
-            <span className="hidden sm:inline">Saved</span>
+            <span>Saved</span>
             <span className="flex items-center justify-center min-w-[18px] sm:min-w-[20px] h-4 sm:h-5 px-1 sm:px-1.5 rounded-full bg-white text-emerald-700 text-[10px] sm:text-xs font-bold">
               {savedCount}
             </span>

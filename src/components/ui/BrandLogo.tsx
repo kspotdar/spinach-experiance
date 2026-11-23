@@ -4,27 +4,27 @@ import { motion } from "framer-motion";
 
 export function BrandLogo() {
   return (
-    <div className="relative flex items-center gap-3 cursor-pointer select-none group py-1">
-      {/* Centered, Prominent Transparent PulseFest Emblem */}
+    <div className="relative flex items-center gap-1.5 sm:gap-3 cursor-pointer select-none group py-1">
+      {/* Scaled & proportional PulseFest Emblem */}
       <div className="flex items-center justify-center self-center shrink-0">
         <img
           src="/pulsefest-icon.png"
           alt="PulseFest Icon"
-          className="w-14 h-14 sm:w-16 sm:h-16 object-contain shrink-0 group-hover:scale-105 transition-transform drop-shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+          className="w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 object-contain shrink-0 group-hover:scale-105 transition-transform drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]"
         />
       </div>
 
       <div className="flex flex-col items-start justify-center self-center">
-        <div className="flex items-center gap-2">
-          {/* Main Logo Text with High-Craft Visual Presence */}
-          <div className="relative font-black text-2xl tracking-tight leading-none text-zinc-900 dark:text-white flex items-center">
+        <div className="flex items-center">
+          {/* Main Logo Text with Responsive Typography */}
+          <div className="relative font-black text-base sm:text-xl md:text-2xl tracking-tight leading-none text-zinc-900 dark:text-white flex items-center">
             <span className="tracking-tight">Pulse</span>
             <span className="animate-liquid-pulse font-black ml-0.5">Fest</span>
           </div>
         </div>
 
-        {/* Kinetic Audio Frequency Waveform Underline (Living ECG & Soundwave Hybrid) */}
-        <div className="relative w-full max-w-[170px] h-3 mt-1 overflow-hidden pointer-events-none">
+        {/* Kinetic Audio Frequency Waveform Underline - hidden on tiny mobile to save vertical space */}
+        <div className="hidden sm:block relative w-full max-w-[140px] md:max-w-[170px] h-2.5 md:h-3 mt-0.5 md:mt-1 overflow-hidden pointer-events-none">
           <svg
             viewBox="0 0 170 12"
             fill="none"
@@ -89,7 +89,7 @@ export function BrandLogo() {
           </svg>
         </div>
 
-        <p className="text-[10px] uppercase font-semibold text-zinc-400 dark:text-zinc-500 tracking-wider -mt-0.5">
+        <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-semibold text-zinc-400 dark:text-zinc-500 tracking-wider mt-0.5 sm:-mt-0.5 truncate max-w-[130px] sm:max-w-none">
           Experience Discovery Engine
         </p>
       </div>

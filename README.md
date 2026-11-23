@@ -28,7 +28,11 @@
 ## 🎯 Requirements Met & Implemented Checklist
 
 ### 1. Functional Requirements
-- [x] **Header Navigation**: Continuous rotating animated logo, theme toggle (Dark/Light mode with local persistence), and saved events badge.
+- [x] **Header Navigation**: Dynamic animated brand identity with live waveform ECG shimmer, theme toggle (Dark/Light mode with local persistence), and responsive saved events trigger.
+- [x] **Mobile UX & Floating Action Button (FAB)**:
+  - Header is kept clutter-free on mobile by resizing the brand logo (`w-8 h-8` on mobile vs `w-14 h-14` on desktop) and hiding redundant horizontal badges.
+  - Chatbot-style bottom-right floating trigger (`fixed bottom-6 right-5 z-50`) with live saved notification badge.
+  - Automatically hides with spring exit transitions when the Saved Drawer is opened to prevent overlapping UI artifacts.
 - [x] **Independent Search Mechanisms**:
   - **Header Search**: Displays instant quick-matches right inside a floating dropdown list without disturbing the main feed. Clicking an item auto-scrolls and highlights the card.
   - **Upcoming Experiences Search**: Dedicated search bar within the filter dashboard to dynamically filter the active grid.
@@ -40,15 +44,16 @@
   - Free Events toggle switch with smooth animated thumb.
   - Custom `Dropdown` for Sort selector (Upcoming, Furthest, Price Low-High, Price High-Low, Most In-Demand) + Reset action.
   - Interactive price range slider ($0 - $200) situated at 4th position.
-- [x] **Responsive Grid & Cards (10 Local Events)**:
+- [x] **Responsive Grid & Dedicated Primary Action Cards (10 Local Events)**:
   - 10 realistic, locally seeded events in `src/data/events.ts`.
   - Image banner with fallback styling, date, time, location, price, tag pills, host avatar, and seats left.
-  - Full cursor pointer ergonomics on all cards, buttons, badges, and controls.
-- [x] **Saved Events Slide-out Drawer**:
-  - Slide-out spring animation from right with backdrop blur.
+  - **Single Prominent Save Action CTA**: Full-width button at the bottom of the card ("Save Experience" / "Saved to My List") recognizing that bookmarking is the primary action in an event discovery engine (no e-commerce cart/checkout needed).
+  - Clean brand-aligned emerald styling without jarring red hover states.
+- [x] **Saved Events Slide-out Drawer & Custom RSVP Modal**:
+  - Slide-out spring animation from right with backdrop blur (`z-[70]`).
   - Add and remove bookmark capabilities with state saved to `localStorage`.
   - Empty state when no events are bookmarked.
-  - Bulk RSVP action trigger.
+  - **Custom High-Craft RSVP Modal**: Replaced native browser alert with an animated celebratory confirmation dialog featuring guest list status, event list summary chips, and confetti celebration.
   - Accessible ESC key listener and background scroll lock.
 - [x] **Meaningful Custom SVG Empty State**:
   - Handcrafted SVG illustration of an event calendar with an animated floating magnifying glass and particles.
@@ -114,51 +119,6 @@ src/
 
 ---
 
-## 📐 Data Model & ER Diagram (Seeded Local JSON)
-
-```mermaid
-erDiagram
-    EVENT {
-        string id PK
-        string title
-        string tagline
-        string description
-        string category "Tech | Design | Music | Art | Business | Wellness"
-        string date "ISO YYYY-MM-DD"
-        string displayDate
-        string time
-        int price "0 for Free"
-        string currency
-        string image
-        string_array tags
-        boolean featured
-        int totalSeats
-        int availableSeats
-    }
-
-    LOCATION {
-        string venue
-        string city
-        string type "In-Person | Virtual | Hybrid"
-    }
-
-    ORGANIZER {
-        string name
-        string avatar
-    }
-
-    USER_PREFERENCE {
-        string_array savedEventIds "Stored in localStorage"
-        string theme "light | dark"
-    }
-
-    EVENT ||--|| LOCATION : has
-    EVENT ||--|| ORGANIZER : hosted_by
-    USER_PREFERENCE }o--o{ EVENT : bookmarks
-```
-
----
-
 ## 🌐 SEO & Accessibility (WCAG 2.1 AA)
 
 - **Semantic HTML**: `<header>`, `<main>`, `<section>`, `<article>`, `<button>`, `<dialog>` role for drawer.
@@ -211,7 +171,13 @@ Generates an optimized, statically prerendered production build with 0 TypeScrip
    Per the constraints, zero backend APIs should be queried. Local storage guarantees instant 0ms latency, works completely offline, and ensures persistent bookmarks across reloads.
 2. **Why Two Search Inputs?**  
    Header searches serve as global quick-lookups where results drop down in a popover without shifting viewport context. The in-section search is dedicated to filtering the event grid directly.
-3. **Performance Optimization**:  
+3. **Card Architecture & Save Action Decision**:
+   Since PulseFest is an event discovery engine rather than an e-commerce platform with a shopping cart, "Save" / "Bookmark" represents the highest-intent user action. Rather than burying it as an ambiguous top icon, it is placed as a full-width primary CTA button ("Save Experience" / "Saved to My List") at the base of every card.
+4. **Mobile Navigation & Floating Action Button (FAB)**:
+   On mobile screens, header space is constrained. Cramming the logo, search bar, theme switch, and saved bookmarks creates visual clutter and squeezes the search input. The saved items trigger is delegated to a bottom-right chatbot-style floating button with real-time badge count, which automatically hides via Framer Motion when the drawer opens to prevent layer clashing.
+5. **Custom Modal Architecture over Native Browser Popups**:
+   Native `alert()` breaks immersion and blocks browser threads. Both newsletter subscription and Bulk RSVP triggers are routed through accessible, keyboard-trapped modal dialogs featuring spring animations, confetti physics, and event summaries.
+6. **Performance Optimization**:  
    - Images are loaded through `next/image` with responsive `sizes` definitions to avoid layout shifts (CLS = 0).
    - Heavy 3D tilt effects use hardware-accelerated CSS `transform-style: preserve-3d` and `will-change: transform`.
    - Category filtering uses `layoutId` for GPU-accelerated spring animations.
