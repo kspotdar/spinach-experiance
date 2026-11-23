@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "7f92023a-5d63-47e1-8080-pulsefest001",
+    "name": "PulseFest Event Discovery API Contract",
+    "description": "Simulated API Contract and schema endpoints for the PulseFest Event Discovery Engine. Compatible with Postman v2.1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.pulsefest.io/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events (Filtered & Sorted)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events?category=Tech&timeHorizon=all&onlyFree=false&priceRange=200&sort=date-asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Tech",
+                  "description": "Category filter: All | Tech | Design | Music | Art | Business | Wellness"
+                },
+                {
+                  "key": "timeHorizon",
+                  "value": "all",
+                  "description": "Horizon: all | today | week | month"
+                },
+                {
+                  "key": "onlyFree",
+                  "value": "false",
+                  "description": "Filter strictly for free passes (price === 0)"
+                },
+                {
+                  "key": "priceRange",
+                  "value": "200",
+                  "description": "Max price slider filter ($0 - $200)"
+                },
+                {
+                  "key": "sort",
+                  "value": "date-asc",
+                  "description": "date-asc | date-desc | price-asc | price-desc | popular"
+                }
+              ]
+            },
+            "description": "Fetches the full event roster or filtered subsets based on query parameters."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Event By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/evt-01",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", "evt-01"]
+            },
+            "description": "Fetches details of a single event by its unique ID."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "RSVP & Bookmarks",
+      "item": [
+        {
+          "name": "Bulk RSVP Confirmation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventIds\": [\"evt-01\", \"evt-03\"],\n  \"timestamp\": \"2026-11-23T12:00:00.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rsvp/bulk",
+              "host": ["{{baseUrl}}"],
+              "path": ["rsvp", "bulk"]
+            },
+            "description": "Submits a bulk RSVP request for all currently saved bookmark events."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Newsletter",
+      "item": [
+        {
+          "name": "Subscribe to Priority Drops",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"developer@spinach.design\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/newsletter/subscribe",
+              "host": ["{{baseUrl}}"],
+              "path": ["newsletter", "subscribe"]
+            },
+            "description": "Subscribes an email to the weekly festival drop dispatches."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

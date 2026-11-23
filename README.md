@@ -8,6 +8,9 @@
 ## 🔗 Live Deployment & Links
 - **GitHub Repository**: [https://github.com/kspotdar/spinach-experiance](https://github.com/kspotdar/spinach-experiance)
 - **Primary Branches**: `main` (clean baseline), `develop` (active feature branch)
+- **Architecture & ER Diagram**: [documentation/pulsefest_er_diagram.jpg](file:///d:/projects-backup/spinach-experiance/documentation/pulsefest_er_diagram.jpg)
+- **API Documentation**: [documentation/API_DOCUMENTATION.md](file:///d:/projects-backup/spinach-experiance/documentation/API_DOCUMENTATION.md)
+- **Postman Collection**: [documentation/PulseFest_Postman_Collection.json](file:///d:/projects-backup/spinach-experiance/documentation/PulseFest_Postman_Collection.json)
 - **Live Deployment**: Ready to deploy directly to Vercel / Netlify.
 
 ---
